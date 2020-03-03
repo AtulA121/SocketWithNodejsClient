@@ -1,0 +1,79 @@
+<div class="container-fluid">
+    <div class="card text-white bg-dark mb-3" *ngFor="let item of events" style="width: 343px;height: 250px;float: left;margin-right: 10px;" id="{{item.id}}">
+        <div class="card-header">{{item.userName}}</div>
+        <div class="card-body">
+        <h5 class="card-title">{{item.game}}</h5>
+        <p class="card-text">{{item.discription}}</p>
+        </div>
+        <div>
+            <button class="btn btn-info" style="float: left;" (click)="editItem(item.id)">Edit</button>
+            <button class="btn btn-danger" style="float: right;" (click)="deleteItem(item.id)">Delete</button>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="row">
+            <div class="col">
+                <span>Edit selected record...</span>
+            </div>
+            <div class="col" style="float: right;">
+                <span class="close" style="float: right;" (click)="closeModal(1)">&times;</span>
+            </div>
+        </div>
+      <div class="row spacing">
+        <div class="col">
+            <label for="">Name</label>
+        </div>
+        <div class="col">
+            <input class="input-group" type="text" name="userName" [(ngModel)]="userName">
+        </div>
+      </div>
+      <div class="row spacing">
+        <div class="col">
+            <label for="">Game</label>
+        </div>
+        <div class="col">
+            <input class="input-group" type="text" name="game" [(ngModel)]="game">
+        </div>
+      </div>
+      <div class="row spacing">
+        <div class="col">
+            <label for="">Description</label>
+        </div>
+        <div class="col">
+            <textarea class="input-group" name="discription" [(ngModel)]="discription"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+            <button class="btn btn-info" (click)="saveData()">Save</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-danger" style="float: right;" (click)="closeModal(1)">Cancel</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div id="myModal2" class="modal2">
+    <div class="modal-content2" id="modal-content2">
+        <div class="row">
+            <div class="col">
+                <span>Delete selected record...</span>
+            </div>
+            <div class="col" style="float: right;">
+                <span class="close" style="float: right;" (click)="closeModal(2)">&times;</span>
+            </div>
+        </div>
+        <div class="row spacing">
+            <div class="col">
+                <button class="btn btn-danger" (click)="deleteItemFromServer()">Delete</button>
+            </div>
+            <div class="col">
+                <button class="btn btn-danger" style="float: right;" (click)="closeModal(2)">Cancel</button>
+            </div>
+          </div>
+    </div>
+</div>
