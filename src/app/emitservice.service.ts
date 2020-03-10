@@ -11,8 +11,15 @@ export class EmitserviceService {
   private changeVariable = new Subject<string>();
   changeVariable$=this.changeVariable.asObservable();
 
+  private eventData = new Subject<string>();
+  eventData$=this.eventData.asObservable();
+
   changeVariableValue(){
     this.changeVariable.next("changed");
+  }
+
+  getEventsData(){
+    this.eventData.next("changed");
   }
 
 }

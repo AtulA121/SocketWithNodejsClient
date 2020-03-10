@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../common.service';
 import { UrlService } from '../url.service';
+import { WebsocketService } from '../websocket.service';
 
 @Component({
   selector: 'app-events',

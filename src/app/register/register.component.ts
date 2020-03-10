@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../common.service';
 import { Router } from '@angular/router';
 import { UrlService } from '../url.service';
+import { WebsocketService } from '../websocket.service';
 
 @Component({
   selector: 'app-register',

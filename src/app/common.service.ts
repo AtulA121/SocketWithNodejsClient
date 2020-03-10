@@ -58,7 +58,7 @@ export class CommonService {
 
   getDataResult(id,itemIs){
     let result=false;
-    if(id === itemIs.id){
+    if(id === itemIs._id){
       result=true;
     }
     return result;
@@ -66,6 +66,10 @@ export class CommonService {
 
   createEvent(url,obj){
     return this._http.post(url,obj);
+  }
+
+  logoutUser(url){
+    return this._http.post(url,{});
   }
 
 }

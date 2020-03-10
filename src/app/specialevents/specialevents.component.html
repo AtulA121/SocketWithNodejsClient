@@ -1,13 +1,13 @@
 <div class="container-fluid">
-    <div class="card text-white bg-dark mb-3" *ngFor="let item of events" style="width: 343px;height: 250px;float: left;margin-right: 10px;" id="{{item.id}}">
+    <div class="card text-white bg-dark mb-3" *ngFor="let item of events" style="width: 343px;height: 250px;float: left;margin-right: 10px;" id="{{item._id}}">
         <div class="card-header">{{item.userName}}</div>
         <div class="card-body">
         <h5 class="card-title">{{item.game}}</h5>
         <p class="card-text">{{item.discription}}</p>
         </div>
         <div>
-            <button class="btn btn-info" style="float: left;" (click)="editItem(item.id)">Edit</button>
-            <button class="btn btn-danger" style="float: right;" (click)="deleteItem(item.id)">Delete</button>
+            <button class="btn btn-info" style="float: left;" (click)="editItem(item._id)">Edit</button>
+            <button class="btn btn-danger" style="float: right;" (click)="deleteItem(item._id)">Delete</button>
         </div>
     </div>
 </div>

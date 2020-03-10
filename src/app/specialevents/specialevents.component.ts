@@ -1,7 +1,8 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonService } from '../common.service';
-import { async } from '@angular/core/testing';
 import { UrlService } from '../url.service';
+import { WebsocketService } from '../websocket.service';
+import { EmitserviceService } from '../emitservice.service';
 
 @Component({
   selector: 'app-specialevents',
@@ -17,9 +18,29 @@ export class SpecialeventsComponent implements OnInit {
   discription:any;
   itemId;
   deleteItemID;
-  constructor(private _commonService : CommonService,private _urlService : UrlService) { }
+  socket;
+
+  constructor(private _commonService : CommonService,private _urlService : UrlService,private _socket : WebsocketService,private _eventEmmiter : EmitserviceService) {
+    this.socket=this._socket.getInstance(this._commonService.getToken());
+  }
 
   ngOnInit(): void {
+    let timer=setInterval(()=>{
+      if(this._socket.getInstance(this._commonService.getToken())!==undefined){
+        clearInterval(timer);
+        this.getSpecialsEvents();
+      }
+      console.log("interval going on : ");
+    },100);
+
+    // this._socket.addListener({
+    //   topic : 1,
+    //   call : this._eventEmmiter.getEventsData
+    // });
+  }
+
+  getSpecialsEvents(){
+    this._socket.sendMessage(this._commonService.getToken(),"getSpecialEvents : ");
     this._commonService.getData(this._urlService.getSpecialEventData).subscribe(res=>{
       this.events=res.result;
     });
@@ -40,6 +61,8 @@ export class SpecialeventsComponent implements OnInit {
   }
 
   deleteItemFromServer(){
+    console.log(this.deleteItemID);
+    this._socket.sendMessage(this._commonService.getToken(),"delete event : ");
     this._commonService.deleteData(this._urlService.deleteData,{id:this.deleteItemID}).subscribe(res=>{
       if(res.result){
         document.getElementById(res.result).remove();
@@ -55,7 +78,7 @@ export class SpecialeventsComponent implements OnInit {
       game : this.game,
       discription : this.discription
     };
-
+    this._socket.sendMessage(this._commonService.getToken(),"edit event : ");
     this._commonService.saveUserData(this._urlService.saveUserData,userData).subscribe(async res=>{
       if(res.result){
         await this._commonService.updateUserInformation(res.result,this.events);
