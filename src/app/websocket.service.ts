@@ -8,7 +8,7 @@ export class WebsocketService {
 
   socket : any;
   listeners=[];
-  socketUrl : any="ws://localhost:3000/event?token="; 
+  socketUrl : any="ws://localhost:3300/event?token="; 
    
   constructor() {
   }
