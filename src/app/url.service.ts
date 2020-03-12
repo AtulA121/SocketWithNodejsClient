@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class UrlService {
 
   constructor() { }
-    local="http://localhost:3000/";
+    local="http://localhost:3300/";
     createEvent = this.local+"createEvent";
     login = this.local+"loginUser";
     getEventData=this.local+"getEventData";

@@ -3,6 +3,7 @@ import { CommonService } from '../common.service';
 import { UrlService } from '../url.service';
 import { WebsocketService } from '../websocket.service';
 import { EmitserviceService } from '../emitservice.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-specialevents',
@@ -20,11 +21,14 @@ export class SpecialeventsComponent implements OnInit {
   deleteItemID;
   socket;
 
-  constructor(private _commonService : CommonService,private _urlService : UrlService,private _socket : WebsocketService,private _eventEmmiter : EmitserviceService) {
+  constructor(private _commonService : CommonService, private _urlService : UrlService, private _socket : WebsocketService, private _eventEmmiter : EmitserviceService, private _activatedRoute : ActivatedRoute, private _router : Router) {
     this.socket=this._socket.getInstance(this._commonService.getToken());
   }
 
   ngOnInit(): void {
+    this._activatedRoute.url.subscribe(url=>{
+      console.log("-------- active route : ",url[0]," , ",this._router.url);
+    });
     let timer=setInterval(()=>{
       if(this._socket.getInstance(this._commonService.getToken())!==undefined){
         clearInterval(timer);
