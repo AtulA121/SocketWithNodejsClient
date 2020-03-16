@@ -25,7 +25,7 @@ export class CreateComponent implements OnInit {
       game : this.game,
       discription : this.discription
     }
-    this._commonService.createEvent(this._urlService.createEvent,userObject).subscribe(res=>{
+    this._commonService.createEvent(this._urlService.createEvent,userObject).subscribe((res : any)=>{
       if(res.result){
         this._router.navigate([this._urlService.specialEventsUrl]);
       }

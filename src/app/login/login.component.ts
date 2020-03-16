@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
       email : this.email,
       password : this.password
     }
-    this._commonService.loginUser(this._urlService.login,userObject).subscribe(res=>{
+    this._commonService.loginUser(this._urlService.login,userObject).subscribe((res : any)=>{
       if(res.result){
         localStorage.setItem("token",res.result.token);
         this._emitService.changeVariableValue();

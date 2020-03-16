@@ -15,7 +15,7 @@ export class EventsComponent implements OnInit {
   constructor(private _commonService : CommonService,private _urlService : UrlService) { }
 
   ngOnInit(): void {
-    this._commonService.getData(this._urlService.getEventData).subscribe(res=>{
+    this._commonService.getData(this._urlService.getEventData).subscribe((res : any)=>{
       this.events=res.result;
     });
   }

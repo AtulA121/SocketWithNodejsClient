@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
       email : this.email,
       password : this.password
     }
-    this._commonService.registerUser(this._urlService.registerUser,userObject).subscribe(res=>{
+    this._commonService.registerUser(this._urlService.registerUser,userObject).subscribe((res : any)=>{
       if(res.result){
         this._router.navigate([this._urlService.loginUrl]);
       }

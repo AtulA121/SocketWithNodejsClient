@@ -45,14 +45,15 @@ export class SpecialeventsComponent implements OnInit {
 
   getSpecialsEvents(){
     this._socket.sendMessage(this._commonService.getToken(),"getSpecialEvents : ");
-    this._commonService.getData(this._urlService.getSpecialEventData).subscribe(res=>{
+    this._commonService.getData(this._urlService.getSpecialEventData).subscribe((res : any)=>{
       this.events=res.result;
     });
   }
 
   async editItem(id){
     this.itemId=id;
-    let item=await this._commonService.getDataOfItem(id,this.events);
+    let item : any;
+    item=await this._commonService.getDataOfItem(id,this.events);
     this.userName=item.userName;
     this.game=item.game;
     this.discription=item.discription;
@@ -67,7 +68,7 @@ export class SpecialeventsComponent implements OnInit {
   deleteItemFromServer(){
     console.log(this.deleteItemID);
     this._socket.sendMessage(this._commonService.getToken(),"delete event : ");
-    this._commonService.deleteData(this._urlService.deleteData,{id:this.deleteItemID}).subscribe(res=>{
+    this._commonService.deleteData(this._urlService.deleteData,{id:this.deleteItemID}).subscribe((res : any)=>{
       if(res.result){
         document.getElementById(res.result).remove();
         document.getElementById("myModal2").style.display="none";
@@ -83,7 +84,7 @@ export class SpecialeventsComponent implements OnInit {
       discription : this.discription
     };
     this._socket.sendMessage(this._commonService.getToken(),"edit event : ");
-    this._commonService.saveUserData(this._urlService.saveUserData,userData).subscribe(async res=>{
+    this._commonService.saveUserData(this._urlService.saveUserData,userData).subscribe(async (res : any)=>{
       if(res.result){
         await this._commonService.updateUserInformation(res.result,this.events);
         this.closeModal(1);
