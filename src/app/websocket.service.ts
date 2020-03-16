@@ -35,7 +35,7 @@ export class WebsocketService {
     });
   }
 
-  onOpen(obj: any){
+  private onOpen(obj: any){
     console.log("connection opend : ",obj);
     this.listeners.forEach((obj)=>{
       console.log(obj.call());
@@ -50,17 +50,17 @@ export class WebsocketService {
     this.socket.emit("message",JSON.stringify(sockObj));
   }
 
-  onMessage(obj: string){
+  private onMessage(obj: string){
     console.log("message received : ",JSON.parse(obj));
   }
 
-  onClose(obj: any){
+  private onClose(obj: any){
     console.log("connection closed : ",obj);
+    this.socket=undefined;
   }
 
   socketClosed(){
     this.socket.close();
-    this.socket=undefined;
   }
 
   addListener(obj: { topic: number; call: () => void; }){
