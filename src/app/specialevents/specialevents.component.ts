@@ -4,6 +4,8 @@ import { UrlService } from '../url.service';
 import { WebsocketService } from '../websocket.service';
 import { EmitserviceService } from '../emitservice.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { CallbackSerService } from '../callback-ser.service';
 
 @Component({
   selector: 'app-specialevents',
@@ -21,8 +23,26 @@ export class SpecialeventsComponent implements OnInit {
   deleteItemID;
   socket;
 
-  constructor(private _commonService : CommonService, private _urlService : UrlService, private _socket : WebsocketService, private _eventEmmiter : EmitserviceService, private _activatedRoute : ActivatedRoute, private _router : Router) {
+  private compInteract = new Subject<any>();
+  compInteract$ = this.compInteract.asObservable();
+
+  constructor(private _commonService : CommonService, private _urlService : UrlService, private _socket : WebsocketService, private _eventEmmiter : EmitserviceService, private _activatedRoute : ActivatedRoute, private _router : Router,private _callbackSer : CallbackSerService) {
     this.socket=this._socket.getInstance(this._commonService.getToken());
+
+    this._socket.addListener({
+      type : "add",
+      call : this.compInteract
+    });
+
+    this.compInteract$.subscribe(res=>{
+      console.log("message through socket to specialEvents : ",res);
+      this.getedData(res);
+    });
+
+  }
+
+  getedData(res){
+    this._callbackSer.getData(res);
   }
 
   ngOnInit(): void {

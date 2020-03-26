@@ -37,9 +37,6 @@ export class WebsocketService {
 
   private onOpen(obj: any){
     console.log("connection opend : ",obj);
-    this.listeners.forEach((obj)=>{
-      console.log(obj.call());
-    });
   }
 
   sendMessage(token : any,obj: string){
@@ -52,6 +49,10 @@ export class WebsocketService {
 
   private onMessage(obj: string){
     console.log("message received : ",JSON.parse(obj));
+
+    this.listeners.forEach((key,index)=>{
+      key.call.next(JSON.parse(obj));
+    })
   }
 
   private onClose(obj: any){
@@ -63,7 +64,7 @@ export class WebsocketService {
     this.socket.close();
   }
 
-  addListener(obj: { topic: number; call: () => void; }){
+  addListener(obj){
     this.listeners.push(obj);
   }
 }
