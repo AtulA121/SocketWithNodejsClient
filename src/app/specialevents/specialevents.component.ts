@@ -27,7 +27,6 @@ export class SpecialeventsComponent implements OnInit {
   compInteract$ = this.compInteract.asObservable();
 
   constructor(private _commonService : CommonService, private _urlService : UrlService, private _socket : WebsocketService, private _eventEmmiter : EmitserviceService, private _activatedRoute : ActivatedRoute, private _router : Router,private _callbackSer : CallbackSerService) {
-    this.socket=this._socket.getInstance(this._commonService.getToken());
 
     this._socket.addListener({
       type : "add",
@@ -45,10 +44,17 @@ export class SpecialeventsComponent implements OnInit {
     this._callbackSer.getData(res);
   }
 
-  ngOnInit(): void {
+  async initSocket(){
+    this.socket=await this._socket.getInstance(this._commonService.getToken());
+  }
+
+  async ngOnInit() {
+    
+    await this.initSocket();
     this._activatedRoute.url.subscribe(url=>{
       console.log("-------- active route : ",url[0]," , ",this._router.url);
     });
+
     let timer=setInterval(()=>{
       if(this._socket.getInstance(this._commonService.getToken())!==undefined){
         clearInterval(timer);
@@ -57,10 +63,6 @@ export class SpecialeventsComponent implements OnInit {
       console.log("interval going on : ");
     },100);
 
-    // this._socket.addListener({
-    //   topic : 1,
-    //   call : this._eventEmmiter.getEventsData
-    // });
   }
 
   getSpecialsEvents(){
